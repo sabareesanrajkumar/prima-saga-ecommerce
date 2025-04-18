@@ -31,6 +31,9 @@ const NavBar = () => {
               <Nav.Link as={Link} to="/product">
                 Product
               </Nav.Link>
+              <Nav.Link as={Link} to="/about">
+                About
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Button variant="outline-primary" onClick={handleShow}>
