@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div>
-      <p>This is home page</p>
+      <h2>Welcome to Prima Sage</h2>
     </div>
   );
 };
