@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import { Button, Badge } from 'react-bootstrap';
 import './NavBar.css';
 
 import Cart from '../Cart/Cart';
+import { CartContext } from '../Cart/CartContext';
 
 const NavBar = () => {
   const [showCart, setShowCart] = useState(false);
 
   const handleClose = () => setShowCart(false);
   const handleShow = () => setShowCart(true);
+
+  const { cartElements } = useContext(CartContext);
+  const totalItems = cartElements.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <>
       <Navbar expand="lg" className="custom-navbar">
@@ -31,6 +35,11 @@ const NavBar = () => {
           </Navbar.Collapse>
           <Button variant="outline-primary" onClick={handleShow}>
             Cart
+            {totalItems > 0 && (
+              <Badge pill bg="danger" className="ms-2">
+                {totalItems}
+              </Badge>
+            )}
           </Button>
         </Container>
       </Navbar>

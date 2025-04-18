@@ -1,38 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import { Offcanvas, Button } from 'react-bootstrap';
+import { CartContext } from './CartContext';
 
 const Cart = ({ show, handleClose }) => {
-  const [cartElements, setCartElements] = useState([
-    {
-      id: 1,
-      title: 'Colors',
-      price: 100,
-      imageUrl:
-        'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-      quantity: 2,
-    },
-    {
-      id: 2,
-      title: 'Black and white Colors',
-      price: 50,
-      imageUrl:
-        'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-      quantity: 3,
-    },
-    {
-      id: 3,
-      title: 'Yellow and Black Colors',
-      price: 70,
-      imageUrl:
-        'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-      quantity: 1,
-    },
-  ]);
-
-  const removeFromCart = (id) => {
-    setCartElements((prev) => prev.filter((item) => item.id !== id));
-  };
+  const { cartElements, removeFromCart } = useContext(CartContext);
 
   return (
     <Offcanvas show={show} onHide={handleClose} placement="end">
@@ -52,7 +24,7 @@ const Cart = ({ show, handleClose }) => {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => removeFromCart(item)}
                 >
                   Remove
                 </Button>
