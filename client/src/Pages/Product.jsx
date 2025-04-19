@@ -43,23 +43,23 @@ const Products = () => {
       <Row>
         {productsArr.map((product, index) => (
           <Col key={index} className="product-card">
-            <Link to={`/product-detail/${product.id}`}>
-              <div className="product-item">
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="product-image"
-                />
+            <div className="product-item">
+              <img
+                src={product.imageUrl}
+                alt={product.title}
+                className="product-image"
+              />
+              <Link to={`/product-detail/${product.id}`}>
                 <h2>{product.title}</h2>
-                <p>${product.price}</p>
-                <Button
-                  variant="outline-success"
-                  onClick={() => addToCart(product)}
-                >
-                  Add to cart
-                </Button>
-              </div>
-            </Link>
+              </Link>
+              <p>${product.price}</p>
+              <Button
+                variant="outline-success"
+                onClick={() => addToCart(product)}
+              >
+                Add to cart
+              </Button>
+            </div>
           </Col>
         ))}
       </Row>
