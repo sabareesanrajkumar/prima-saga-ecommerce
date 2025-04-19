@@ -37,6 +37,9 @@ const NavBar = () => {
               <Nav.Link as={Link} to="/contactus">
                 Contact Us
               </Nav.Link>
+              <Nav.Link as={Link} to="/login">
+                Login
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Button variant="outline-primary" onClick={handleShow}>

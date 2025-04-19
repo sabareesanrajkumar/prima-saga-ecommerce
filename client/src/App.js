@@ -7,6 +7,7 @@ import Product from './Pages/Product';
 import About from './Pages/About';
 import ContactUs from './Pages/ContactUs';
 import ProductDetails from './Pages/ProductDetails';
+import Login from './Pages/Login';
 import { CartProvider } from './Components/Cart/CartContext';
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
               path="/product-detail/:productId"
               element={<ProductDetails />}
             />
+
+            <Route path="/Login" element={<Login />} />
           </Routes>
         </Router>
       </CartProvider>
