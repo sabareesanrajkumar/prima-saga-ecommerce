@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
+import { CartContext } from '../Cart/CartContext';
 
 export const AuthContext = React.createContext({
   token: '',
@@ -16,9 +17,10 @@ export const AuthProvider = ({ children }) => {
     setToken(token);
     localStorage.setItem('token', token);
     resetTimer();
-  }, []);
-
-  const logoutHandler = useCallback(() => {
+  });
+  const { saveCartBeforeLogout } = useContext(CartContext);
+  const logoutHandler = useCallback(async () => {
+    await saveCartBeforeLogout();
     setToken(null);
     localStorage.removeItem('token');
     if (logoutTimer) clearTimeout(logoutTimer);
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     logoutTimer = setTimeout(() => {
       logoutHandler();
       alert('You have been logged out due to inactivity.');
-    }, 5000);
+    }, 50000000);
   }, [logoutHandler]);
 
   useEffect(() => {
