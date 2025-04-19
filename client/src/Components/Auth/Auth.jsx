@@ -43,13 +43,6 @@ function Auth() {
       setMessage(errorMsg);
     }
   };
-  if (authContext.isLoggedIn) {
-    return (
-      <Container className="text-center my-5">
-        <h3>You're Logged In!</h3>
-      </Container>
-    );
-  }
 
   return (
     <Container className="my-5">
