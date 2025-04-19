@@ -29,7 +29,9 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Product" element={<Product />} />
+            {authContext.isLoggedIn && (
+              <Route path="/Product" element={<Product />} />
+            )}
             <Route path="/About" element={<About />} />
             <Route path="/ContactUs" element={<ContactUs />} />
             <Route
