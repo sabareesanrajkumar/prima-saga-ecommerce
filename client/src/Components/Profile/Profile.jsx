@@ -14,7 +14,7 @@ const Profile = () => {
     const newPassword = passwordRef.current.value;
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyACwXu2-AU9rUeQT3n6rWGuqjalM2zWBWI`,
         {
           idToken: authContext.token,
