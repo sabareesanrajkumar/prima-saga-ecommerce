@@ -1,7 +1,12 @@
 import './App.css';
 import Header from './Components/Header/Header';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import Home from './Pages/Home';
 import Product from './Pages/Product';
 import About from './Pages/About';
@@ -10,7 +15,13 @@ import ProductDetails from './Pages/ProductDetails';
 import Login from './Pages/Login';
 import { CartProvider } from './Components/Cart/CartContext';
 
+import Auth from './Components/Auth/Auth';
+import Profile from './Components/Profile/Profile';
+import { AuthContext } from './Components/Auth/AuthContext';
+import { useContext } from 'react';
+
 function App() {
+  const authContext = useContext(AuthContext);
   return (
     <div className="App">
       <CartProvider>
@@ -26,7 +37,18 @@ function App() {
               element={<ProductDetails />}
             />
 
-            <Route path="/Login" element={<Login />} />
+            {!authContext.isLoggedIn && (
+              <Route path="/auth" element={<Auth />} />
+            )}
+            {authContext.isLoggedIn && (
+              <Route path="/profile" element={<Profile />} />
+            )}
+            <Route
+              path="*"
+              element={
+                <Navigate to={authContext.isLoggedIn ? '/profile' : '/auth'} />
+              }
+            />
           </Routes>
         </Router>
       </CartProvider>

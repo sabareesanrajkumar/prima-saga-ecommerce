@@ -6,6 +6,7 @@ import './NavBar.css';
 
 import Cart from '../Cart/Cart';
 import { CartContext } from '../Cart/CartContext';
+import { AuthContext } from '../Auth/AuthContext';
 
 const NavBar = () => {
   const [showCart, setShowCart] = useState(false);
@@ -14,6 +15,8 @@ const NavBar = () => {
   const handleShow = () => setShowCart(true);
 
   const { cartElements } = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
+
   const totalItems = cartElements.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <>
@@ -37,9 +40,15 @@ const NavBar = () => {
               <Nav.Link as={Link} to="/contactus">
                 Contact Us
               </Nav.Link>
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
+              {!authCtx.isLoggedIn && <Nav.Link href="/auth">Login</Nav.Link>}
+              {authCtx.isLoggedIn && (
+                <>
+                  <Nav.Link href="/profile">Profile</Nav.Link>
+                  <Button variant="outline-danger" onClick={authCtx.logout}>
+                    Logout
+                  </Button>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
           <Button variant="outline-primary" onClick={handleShow}>

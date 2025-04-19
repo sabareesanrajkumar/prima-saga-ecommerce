@@ -1,12 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { AuthContext } from './AuthContext';
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [message, setMessage] = useState('');
+  const authContext = useContext(AuthContext);
   const submitHandler = async (e) => {
     e.preventDefault();
     const enteredEmail = emailInputRef.current.value;
@@ -31,9 +33,8 @@ function Auth() {
         }
       );
       console.log(response.data);
-      if (isLogin) {
-        localStorage.setItem('token', response.data.idToken);
-      }
+      authContext.login(response.data.idToken);
+
       setMessage('Authentication successful!');
     } catch (error) {
       console.log(error);
@@ -42,6 +43,13 @@ function Auth() {
       setMessage(errorMsg);
     }
   };
+  if (authContext.isLoggedIn) {
+    return (
+      <Container className="text-center my-5">
+        <h3>You're Logged In!</h3>
+      </Container>
+    );
+  }
 
   return (
     <Container className="my-5">
