@@ -53,14 +53,16 @@ const NavBar = () => {
               )}
             </Nav>
           </Navbar.Collapse>
-          <Button variant="outline-primary" onClick={handleShow}>
-            Cart
-            {totalItems > 0 && (
-              <Badge pill bg="danger" className="ms-2">
-                {totalItems}
-              </Badge>
-            )}
-          </Button>
+          {authCtx.isLoggedIn && (
+            <Button variant="outline-primary" onClick={handleShow}>
+              Cart
+              {totalItems > 0 && (
+                <Badge pill bg="danger" className="ms-2">
+                  {totalItems}
+                </Badge>
+              )}
+            </Button>
+          )}
         </Container>
       </Navbar>
       <Cart show={showCart} handleClose={handleClose} />
