@@ -7,27 +7,39 @@ function Auth() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [message, setMessage] = useState('');
-
   const submitHandler = async (e) => {
     e.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+
+    const url = isLogin
+      ? `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyACwXu2-AU9rUeQT3n6rWGuqjalM2zWBWI`
+      : `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyACwXu2-AU9rUeQT3n6rWGuqjalM2zWBWI`;
+
     try {
+      const response = await axios.post(
+        url,
+        {
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
       if (isLogin) {
-      } else {
-        axios.post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signup?key=AIzaSyACwXu2-AU9rUeQT3n6rWGuqjalM2zWBWI`,
-          JSON.stringify({
-            email: enteredEmail,
-            password: enteredPassword,
-            returnSecureToken: true,
-          }),
-          { headers: { 'Content-Type': 'application/json' } }
-        );
+        localStorage.setItem('token', response.data.idToken);
       }
+      setMessage('Authentication successful!');
     } catch (error) {
       console.log(error);
-      setMessage(error.message);
+      const errorMsg =
+        error.response?.data?.error?.message || 'Authentication failed';
+      setMessage(errorMsg);
     }
   };
 
